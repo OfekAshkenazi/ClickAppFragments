@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyVH> {
     int count;
-
+    int selectedCount;
     public ListAdapter(int count) {
         this.count = count;
+        selectedCount=0;
     }
 
     @Override
@@ -52,9 +53,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyVH> {
 
     public class MyVH extends RecyclerView.ViewHolder {
         TextView textView;
-        public MyVH(View itemView) {
+        public MyVH(final View itemView) {
             super(itemView);
             textView=itemView.findViewById(android.R.id.text1);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    itemView.setBackgroundColor(Color.WHITE);
+                    selectedCount++;
+                    return true;
+                }
+            });
         }
+    }
+    public int getSaveCount(){
+        return count-selectedCount;
     }
 }

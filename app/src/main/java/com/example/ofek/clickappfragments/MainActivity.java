@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button addBtn;
     boolean isLand=false;
     int counter=0;
+    ListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         }
         counter=savedInstanceState.getInt("count",0);
         recyclerView= (RecyclerView) findViewById(R.id.list);
-        ListAdapter adapter=new ListAdapter(counter);
+        adapter=new ListAdapter(counter);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -79,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
         if (counterTV!=null){
             counter= Integer.parseInt(counterTV.getText().toString());
         }
-        outState.putInt("count", counter);
+        if (isLand)
+            outState.putInt("count", adapter.getSaveCount());
+        else
+            outState.putInt("count", counter);
         super.onSaveInstanceState(outState);
     }
 }
